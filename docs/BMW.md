@@ -140,7 +140,7 @@ Note: `lpeld` is for ***light*** g gracenote strike on d, ***not*** "low g
 strike on d." The "heavy" version is simply `peld`.
 
 | Note      | Hornpipe Shake | Thumb Hornpipe Shake | Half Hornpipe Shake |
-| --------- | -------------- | -------------------- |
+| --------- | -------------- | -------------------- |  ---- |
 | low g     | unimplemented  | unimplemented        | unimplemented       |
 | low a     | `pella`        | `tpella`             | `hpella`            |
 | b         | `pelb`         | `tpelb`              | `hpelb`             |

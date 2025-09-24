@@ -1,4 +1,4 @@
-# pibroxide: A Rust Bagpipe Rosetta Stone
+# pibroxide: A Rusty Bagpipe Rosetta Stone
 
 ## Motivation and Goals
 
