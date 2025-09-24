@@ -55,96 +55,170 @@ on F: `Dr_8 Er_16 Fl_16`
 
 These are unique in that they are all lowercase with no other punctuation.
 
-### Single Gracenotes
+### Single Gracenotes/Strikes
 
-| Grace note     | BMW Representation(s) |
-| -------------- | --------------------- |
-| low g          | `strlg`               |
-| low a          | `strla`               |
-| b              | ?                     |
-| c              | `strc`                |
-| d              | `dg`                  |
-| e              | `eg` or `stre`        |
-| f              | `strf`                |
-| high g         | `gg`                  |
-| high a (thumb) | `tg`                  |
+On the page, these grace notes and "strikes" (aka "taps") put a single grace
+note on the intended space, and look identical. The difference is in the audio
+output, since, for example, an e strike from f would sound different than an e
+grace note from low a.
+
+I plan to accept both of these when parsing the file, but
+only output the grace note versions (for now), since the validation of knowing
+when to use a grace note vs a strike will require a significant amount of logic.
+
+| Note           | BMW Grace Note | BMW Strike |
+| -------------- | -------------- | ---------- |
+| low g          | unimplemented  | `strlg`    |
+| low a          | `ag`           | `strla`    |
+| b              | `bg`           | `strb`     |
+| c              | `cg`           | `strc`     |
+| d              | `dg`           | `strd`     |
+| e              | `eg`           | `stre`     |
+| f              | `fg`           | `strf`     |
+| high g         | `gg`           | `strhg`    |
+| high a (thumb) | `tg`           | `strha`    |
 
 ### Doublings
 
-All of the doublings seem to be `db` followed by their respective lowercase
-note.
+Standard doublings, low g - high a, are given with `db` followed by their
+respective note.
 
-Example: D doubling: `dbd`
+Thumb doublings and half doublings similarly use `tdb` and
+`hdb`.
 
-### Thumb Doublings
+Note that high g and high a half doublings and thumb doublings are
+unimplemented since these could either be referred to interchangeably with their
+standard doublings, or could be considered impossible to perform.
 
-Prepend the proper doubling with `t`
+| Note   | Doubling | Thumb Doubling | Half Doubling |
+| ------ | -------- | -------------- | ------------- |
+| low g  | `dblg`   | `tdblg`        | `hdblg`       |
+| low a  | `dbla`   | `tdbla`        | `hdbla`       |
+| b      | `dbb`    | `tdbb`         | `hdbb`        |
+| c      | `dbc`    | `tdbc`         | `hdbc`        |
+| d      | `dbd`    | `tdbd`         | `hdbd`        |
+| e      | `dbe`    | `tdbe`         | `hdbe`        |
+| f      | `dbf`    | `tdbf`         | `hdbf`        |
+| high g | `dbhg`   | unimplemented  | unimplemented |
+| high a | `dbha`   | unimplemented  | unimplemented |
 
-Example: Thumb doubling on F: `tdbf`
+### Grace Note Strikes/Slurs/Shakes
 
-### Half Doublings
+BMW refers to "slurs" (sometimes also called shakes, for example a g grace note
+to d followed by a tap on low g), as "grace note strikes." They use the format
+`gstb` for "g strike on b."
 
-Prepend the proper doubling with `h`
+The thumb version (with high a grace note instead of g grace note) is similarly
+`tstb`, and the half version (with no leading grace note) is `hstb`.
 
-Example: Half doubling on E: `hdbe`
+Note: `lgstd` is for ***light*** g gracenote strike on d, ***not*** "low g
+strike on d." The "heavy" version is simply `gstd`.
 
-### Strikes/Slurs/Shakes
-
-(whatever you personally choose to call a g grace note to b, followed by a low g
-strike on b)
-
-| Embellishment | BMW     |
-| ------------- | ------- |
-| Low G         | X       |
-| Low A         | ?       |
-| B             | `gstb`  |
-| C             | ?       |
-| D (heavy)     | `lgstd` |
-| D (light)     | ?       |
-| E             | ?       |
-| F             | ?       |
-| High G        | ?       |
-| High A        | `dblha` |
+| Note      | Slur          | Thumb Slur    | Half Slur     |
+| --------- | ------------- | ------------- | ------------- |
+| low g     | unimplemented | unimplemented | unimplemented |
+| low a     | `gstla`       | `tstla`       | `hstla`       |
+| b         | `gstb`        | `tstb`        | `hstb`        |
+| c         | `gstc`        | `tstc`        | `hstc`        |
+| d (heavy) | `gstd`        | `tstd`        | `hstd`        |
+| d (light) | `lgstd`       | `ltstd`       | `lhstd`       |
+| e         | `gste`        | `tste`        | `hste`        |
+| f         | `gstf`        | `tstf`        | `hstf`        |
+| high h    | unimplemented | `tsthg`       | `hsthg`       |
+| high a    | unimplemented | unimplemented | unimplemented |
 
 ### Hornpipe Shakes/ Peles
 
-(whatever you personally choose to call a D doubling followed by a d strike,
-like on C in pumpkin's fancy)
+An example of this would be a D doubling followed by a low g strike strike, like
+on C in pumpkin's fancy. Prepend `pel` with the appropriate lowercase pitch
+note, like `pelb` for "pele on b."
 
-Prepend `pel` with the appropriate lowercase pitch note.
+For thumb version (with high a grace note instead of g grace note) is similarly
+`tpelb`, and the half version (with no leading grace note) is `hpelb`
 
-Example: `pelc` for hornpipe shake on C
+Note: `lpeld` is for ***light*** g gracenote strike on d, ***not*** "low g
+strike on d." The "heavy" version is simply `peld`.
 
-(This at least holds for `pelb` and `peld` as well, the rest of the notes I'm
-unsure if they are valid as they are not commonly used in tunes)
+| Note      | Hornpipe Shake | Thumb Hornpipe Shake | Half Hornpipe Shake |
+| --------- | -------------- | -------------------- |
+| low g     | unimplemented  | unimplemented        | unimplemented       |
+| low a     | `pella`        | `tpella`             | `hpella`            |
+| b         | `pelb`         | `tpelb`              | `hpelb`             |
+| c         | `pelc`         | `tpelc`              | `hpelc`             |
+| d (heavy) | `peld`         | `tpeld`              | `hpeld`             |
+| d (light) | `lpeld`        | `ltpeld`             | `lhpeld`            |
+| e         | `pele`         | `tpele`              | `hpele`             |
+| f         | `pelf`         | `tpelf`              | `hpelf`             |
+| high g    | unimplemented  | `tpelhg`             | `hpelhg`            |
+| high a    | unimplemented  | unimplemented        | unimplemented       |
+
+### Birls
+
+| Embellishment      | BMW   |
+| ------------------ | ----- |
+| Birl w/ g g.n.     | `gbr` |
+| Birl from a        | `brl` |
+| Birl w/ low a      | `abr` |
+| Birl w/ thumb g.n. | `tbr` |
+
+### D throws
+
+| Embellishment   | BMW      |
+| --------------- | -------- |
+| D throw (light) | `thrd`   |
+| D throw (heavy) | `hvthrd` |
+
+### Grips
+
+| Embellishment  | BMW    |
+| -------------- | ------ |
+| Grip           | `grp`  |
+| Grip w/ b g.n. | `grpb` |
+
+### Catches (grace note grips)
+
+A "catch" refers to a g grace note to a theme note, followed by a grip back to
+that note. An example would be the g grace note to c followed by grip on c in
+the third part of cabar feidh, which would be a "c catch". BMW uses `ggrpc` for
+this, for a "g grace note grip on c."
+
+For thumb version (with high a grace note instead of g grace note) is similarly
+`tgrpc`, and the half version (with no leading grace note) is `hgrpc`.
+
+Note that the `ggrpf`, `tgrpf`, and `hgrpf` all have an f grace note in between
+the low g's, rather than a d grace note. The same holds for `tgrphg` (but not
+`hgrphg`?)
+
+| Note             | Catch         | Thumb Catch   | Half Catch    |
+| ---------------- | ------------- | ------------- | ------------- |
+| low g            | unimplemented | unimplemented | unimplemented |
+| low a            | `ggrpla`      | `tgrpla`      | `hgrpla`      |
+| b                | `ggrpb`       | `tgrpb`       | `hgrpb`       |
+| c                | `ggrpc`       | `tgrpc`       | `hgrpc`       |
+| d (d grace note) | `ggrpd`       | `tgrpd`       | `hgrpd`       |
+| d (b grace note) | `ggrpdb`      | `tgrpdb`      | `hgrpdb`      |
+| e                | `ggrpe`       | `tgrpe`       | `hgrpe`       |
+| f                | `ggrpf`       | `tgrpf`       | `hgrpf`       |
+| high g           | unimplemented | `tgrphg`      | `hgrphg`      |
+| high a           | unimplemented | unimplemented | `hgrpha`      |
 
 ### Other Embellishments
 
-Some of these are rare or mostly used in piobaireachd, so I am having trouble
-finding them used in tunes
-
-| Embellishment       | BMW      |
-| ------------------- | -------- |
-| Grip                | `grp`    |
-| Grip w/ b g.n.      | `grpb`   |
-| Taorluath           | `taor`   |
-| Taorluath w/ b g.n. | `taorb`  |
-| Low g taorluath     | ?        |
-| D throw             | `thrd`   |
-| Crunluath           | `crunl`  |
-| Crunluath w/ b g.n. | `crunlb` |
-| Heavy Crunluath     | ?        |
-| Heavy B Crunluath   | ?        |
-| Edre                | `edre`   |
-| Dare                | `dare`   |
-| Chedari             | ?        |
-| Embari              | ?        |
-| Hodro               | `ggrpc`  |
-| Hiotro              | `ggrpb`  |
-| Birl w/ g g.n.      | `gbr`    |
-| Birl from a         | `brl`    |
-| Birl w/ low a       | `abr`    |
-| Darodo              | `bubly`  |
+| Embellishment       | BMW           |
+| ------------------- | ------------- |
+| Taorluath           | `taor`        |
+| Taorluath w/ b g.n. | `taorb`       |
+| Low g taorluath     | unimplemented |
+| Crunluath           | `crunl`       |
+| Crunluath w/ b g.n. | `crunlb`      |
+| Heavy Crunluath     | unimplemented |
+| Heavy B Crunluath   | unimplemented |
+| Edre                | `edre`        |
+| Dare                | `dare`        |
+| Chedari             | unimplemented |
+| Embari              | unimplemented |
+| Darodo              | `bubly`       |
+| Darodo (from low g) | `hbubly`      |
 
 ## Constructing a measure
 
@@ -158,7 +232,9 @@ measure of whatever length before the first full measure starts
 ## Constructing a line
 
 Each line starts with `& sharpf sharpc` (with an optional time signature if it's
-the first part) and ends with either `!t` (line break?), `!I` (final bar line?),
+the first part). The `&` creates a treble clef ("g clef").
+
+ and ends with either `!t` (line break?), `!I` (final bar line?),
 or `''!I` (repeat).
 
 ### Time signatures
