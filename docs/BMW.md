@@ -41,6 +41,16 @@ a `^t` followed by the lowercase represenation of the pitch.
 
 Example: a quarter note on D tied to an eighth note on D: `D_4 ^td D_8`
 
+You may also use `^ts` and `^te`, for "tie start" and "tie end" respectively.
+This adds a tie above the staff, connecting whatever notes fall between the
+start and end symbols.
+
+### Triplets
+
+You can use `3s` and `3e` to add a triplet symbol above a set of notes that fall
+between the `3s` and `3e`. The compiler does not actually verify how many
+beats/notes fall in this space. 
+
 ### Beaming
 
 Beaming is given by an `l` or `r` to denote which direction the beam is facing.
@@ -66,17 +76,20 @@ I plan to accept both of these when parsing the file, but
 only output the grace note versions (for now), since the validation of knowing
 when to use a grace note vs a strike will require a significant amount of logic.
 
-| Note           | BMW Grace Note | BMW Strike |
-| -------------- | -------------- | ---------- |
-| low g          | unimplemented  | `strlg`    |
-| low a          | `ag`           | `strla`    |
-| b              | `bg`           | `strb`     |
-| c              | `cg`           | `strc`     |
-| d              | `dg`           | `strd`     |
-| e              | `eg`           | `stre`     |
-| f              | `fg`           | `strf`     |
-| high g         | `gg`           | `strhg`    |
-| high a (thumb) | `tg`           | `strha`    |
+| Note           | BMW Grace Note | BMW Strike    |
+| -------------- | -------------- | ------------- |
+| low g          | unimplemented  | `strlg`       |
+| low a          | `ag`           | `strla`       |
+| b              | `bg`           | `strb`        |
+| c              | `cg`           | `strc`        |
+| d              | `dg`           | `strd`        |
+| e              | `eg`           | `stre`        |
+| f              | `fg`           | `strf`        |
+| high g         | `gg`           | `strhg`       |
+| high a (thumb) | `tg`           | unimplemented |
+
+Note the "Bagpipe Player" app offers a `strha` option, but this throws an error
+on compilation.
 
 ### Doublings
 
@@ -140,7 +153,7 @@ Note: `lpeld` is for ***light*** g gracenote strike on d, ***not*** "low g
 strike on d." The "heavy" version is simply `peld`.
 
 | Note      | Hornpipe Shake | Thumb Hornpipe Shake | Half Hornpipe Shake |
-| --------- | -------------- | -------------------- |  ---- |
+| --------- | -------------- | -------------------- | ------------------- |
 | low g     | unimplemented  | unimplemented        | unimplemented       |
 | low a     | `pella`        | `tpella`             | `hpella`            |
 | b         | `pelb`         | `tpelb`              | `hpelb`             |
@@ -222,7 +235,9 @@ the low g's, rather than a d grace note. The same holds for `tgrphg` (but not
 
 ## Constructing a measure
 
-Measures start with `!`, then have the various grace notes and theme notes.
+Measures start with `!`, then have the various grace notes and theme notes. One
+measure takes up a full line of text. Each beat within a measure is, by
+convention, separated by tabs.
 
 ### Pickup measures
 
@@ -231,20 +246,79 @@ measure of whatever length before the first full measure starts
 
 ## Constructing a line
 
-Each line starts with `& sharpf sharpc` (with an optional time signature if it's
-the first part). The `&` creates a treble clef ("g clef").
+Each line starts with `& sharpf sharpc` (with an optional [Time signatures] if
+it's the first part). The `&` creates a treble clef ("g clef"). Each measure is
+separated by [Barlines]. The final bar in a line of music *must* end with a
+terminating barline `!t` or ending barline. Omitting this disrupts the
+formatting.
 
- and ends with either `!t` (line break?), `!I` (final bar line?),
-or `''!I` (repeat).
+### Barlines
+
+| Barline                                                  | BMW    |
+| -------------------------------------------------------- | ------ |
+| Standard barline                                         | `!`    |
+| Terminating barline (goes at the end of a line of music) | `!t`   |
+| End of part/ double thin barline                         | `!!`   |
+| Start of tune double barline                             | `I!`   |
+| End of tune double barline                               | `!I`   |
+| Begin repeat barline                                     | `I!''` |
+| End repeat barline                                       | `''!I` |
+
+The end of a line of music must end with either a terminating barline  (`!t`,
+for the middle of a part), end of tune (`!|`), or end of repeat (`''!I`)
+barline. These act as newline characters as well as printing their barlines, so
+omitting them will disrupt formatting.
+
+### Accidentals and key signatures
+
+Normally each line of music starts with `& sharpf sharpc`, which indicates a
+treble clef and key signature. The `sharpf sharpc` places a sharp on the f line
+a c space on the staff, however, there is no validation logic done here on key
+signatures, you can add any accidental markings on any space in any order.
+
+For sharps, prepend the lowercase note with `sharp`. Example: Sharp high a,
+despite not being a valid bagpipe note, can be notated as `sharpha`.
+
+For flats, prepend the lowercase note with `flat`. Example: D flat can be notated
+as `flatd`.
+
+For naturals, similarly prepend the lowercase note with `natural`. Example: C
+natural is `naturalc`.
 
 ### Time signatures
 
-`2_4`, `6_8`, `4_4`, etc.
+For most time signatures, separate the numerator with the denominator. Example:
+2/4 time can be notated as `2_4`. Common time is `C`, and cut time is `C_`.
+
+Supported time signatures in BMW include:
+
+| Time signature | BMW    |
+| -------------- | ------ |
+| 2/2            | `2_2`  |
+| 3/2            | `3/2`  |
+| Cut time       | `C_`   |
+| Common time    | `C`    |
+| 2/4            | `4_4`  |
+| 3/4            | `3_4`  |
+| 4/4            | `4_4`  |
+| 5/4            | `5_4`  |
+| 6/4            | `6_4`  |
+| 7/4            | `7_4`  |
+| 6/8            | `6_8`  |
+| 9/8            | `9_8`  |
+| 12/8           | `12_8` |
+| 15/8           | `15/8` |
+| 21/8           | `21/8` |
 
 ## Second Endings
 
 First ending starts with `'1` and ends with `_'` Second ending simialrly starts
 with `'2` and ends with `_'`
+
+The "second time through for 2nd part" can be done via `'22`, and so on through
+`'28` for second time through the 8th part.
+
+An introduction can be notated with `'intro`.
 
 ## Misc
 
@@ -280,4 +354,16 @@ TuneFormat,(1,1,F,L,500,500,500,500,L,0,0)
 
 "",(F,R,0,0,Times New Roman,10,400,0,0,18,0,0,0)
 
+```
+
+Some of these coincide with:
+
+```bmw
+"Title",(T,L,0,0,Times New Roman,16,700,0,0,18,0,0,0)
+"Type",(Y,C,0,0,Times New Roman,14,400,0,0,18,0,0,0)
+"Composer/Arranger",(M,R,0,0,Times New Roman,14,400,0,0,18,0,0,0)
+"Footer",(F,R,0,0,Times New Roman,10,400,0,0,18,0,0,0)
+"In-Line",(I,L,0,0,Times New Roman,11,700,0,0,0,0,0,0) 
+"Fixed",(X,L,1000,1000,Times New Roman,12,400,0,0,0,0,0,0) 
+"Comment" 
 ```
