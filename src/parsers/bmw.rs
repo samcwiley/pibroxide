@@ -32,7 +32,7 @@ pub fn process_bmw_bar(line: &str) -> Measure {
             let result = last.add_dot();
             match result {
                 Ok(_) => (),
-                Err(err) => eprintln!("{err}"),
+                Err(err) => errors.push(NoteParseError::DotError(err)),
             }
         } else {
             match process_bmw_embellishment(token) {

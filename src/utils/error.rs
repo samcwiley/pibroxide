@@ -6,6 +6,7 @@ pub enum NoteParseError {
     UnrecognizedPitch(String),
     InvalidDuration(String),
     Custom(String),
+    DotError(DotError),
 }
 
 impl Display for NoteParseError {
@@ -19,6 +20,7 @@ impl Display for NoteParseError {
                 write!(f, "Unrecognized duration: {duration}")
             }
             NoteParseError::Custom(message) => write!(f, "{message}"),
+            NoteParseError::DotError(dot_error) => write!(f, "{dot_error}"),
         }
     }
 }
