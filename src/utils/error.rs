@@ -1,10 +1,27 @@
 use std::fmt::Display;
 
 #[derive(Debug)]
-pub struct NoteParseError;
+pub enum NoteParseError {
+    UnrecognizedEmbellishment(String),
+    UnrecognizedPitch(String),
+    InvalidDuration(String),
+    Custom(String),
+}
 
-#[derive(Debug)]
-pub struct PitchParseError;
+impl Display for NoteParseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            NoteParseError::UnrecognizedEmbellishment(embellishment) => {
+                write!(f, "Unrecognized embellishment: {embellishment}")
+            }
+            NoteParseError::UnrecognizedPitch(pitch) => write!(f, "Unrecognized pitch: {pitch}"),
+            NoteParseError::InvalidDuration(duration) => {
+                write!(f, "Unrecognized duration: {duration}")
+            }
+            NoteParseError::Custom(message) => write!(f, "{message}"),
+        }
+    }
+}
 
 #[derive(Debug)]
 pub enum DotError {
@@ -20,4 +37,12 @@ impl Display for DotError {
         };
         write!(f, "{out}")
     }
+}
+
+pub fn write_measure_parse_errors(measure_num: usize, errors: &[NoteParseError]) {
+    let errors = errors
+        .iter()
+        .map(|error| format!("{error}"))
+        .fold(String::new(), |a, b| a + ", " + &b);
+    eprintln!("Parsing errors found in measure {measure_num}: {errors}");
 }

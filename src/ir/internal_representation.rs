@@ -4,7 +4,7 @@ use std::fmt;
 
 use crate::utils::{error::DotError, math::f32_eq};
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct Note {
     pub pitch: Pitch,
     pub duration: Duration,
@@ -23,6 +23,19 @@ impl fmt::Display for Note {
                 )
             }
         }
+    }
+}
+
+impl Note {
+    /// Returns the same note with a dot added to the duration, if possible.
+    ///
+    /// # Errors
+    ///
+    /// This function will return a [`DotError`] if the note is already dotted
+    /// or the note's duration is a 32nd
+    pub fn add_dot(&mut self) -> Result<Self, DotError> {
+        self.duration = self.duration.add_dot()?;
+        Ok(*self)
     }
 }
 
@@ -80,7 +93,7 @@ impl fmt::Display for Pitch {
     }
 }
 
-#[derive(Clone, Debug, Copy, Default)]
+#[derive(Clone, Debug, Copy, Default, PartialEq, Eq)]
 pub enum Duration {
     ThirtySecond,
     Sixteenth,
@@ -173,7 +186,7 @@ impl fmt::Display for Duration {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Embellishment {
     GraceNote(Pitch),
     Doubling(Pitch),

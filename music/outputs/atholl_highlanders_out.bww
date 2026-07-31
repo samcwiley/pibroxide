@@ -23,46 +23,46 @@ TuneFormat,(1,1,F,L,500,500,500,500,L,0,0)
 "",(F,R,0,0,Times New Roman,10,400,0,0,18,0,0,0)
 
 
-&  sharpf sharpc 6_8	I!''	gg E_4 'e	dbe Er_8	Cl_8	dg LAl_8	
-!	gg Er_8	Cl_8	dg LAl_8	gg Br_8	Cl_8	Dl_8	
-!	gg E_4 'e	dbe Er_8	Cl_8	dg LAl_8	
-!	gg Br_8	Cl_8	Dl_8	dbc Cr_8	Bl_8	strlg LAl_8	!t
+&  sharpf sharpc 6_8	I!''	gg E_4 'e 	dbe Er_8 Cl_8 dg LAl_8 	
+!	gg Er_8 Cl_8 dg LAl_8 	gg Br_8 Cl_8 Dl_8 	
+!	gg E_4 'e 	dbe Er_8 Cl_8 dg LAl_8 	
+!	gg Br_8 Cl_8 Dl_8 	dbc Cr_8 Bl_8 strlg LAl_8 	!t
 
 &  sharpf sharpc 	
-!	gg E_4 'e	dbe Er_8	Cl_8	dg LAl_8	
-!	gg Er_8	Cl_8	dg LAl_8	gg Br_8	Cl_8	Dl_8	
-!	dbc Cr_8	HAl_8	El_8	gg Fr_8	El_8	Dl_8	
-!	gg Cr_8	Dl_8	eg Bl_8	strlg LA_4 'la	''!I
+!	gg E_4 'e 	dbe Er_8 Cl_8 dg LAl_8 	
+!	gg Er_8 Cl_8 dg LAl_8 	gg Br_8 Cl_8 Dl_8 	
+!	dbc Cr_8 HAl_8 El_8 	gg Fr_8 El_8 Dl_8 	
+!	gg Cr_8 Dl_8 eg Bl_8 	strlg LA_4 'la 	''!I
 
-&  sharpf sharpc 	I!''	gg LAr_8	dg Cl_8	El_8	gg LAr_8	dg Cl_8	El_8	
-!	gg Br_8	Dl_8	Fl_8	gg Br_8	Dl_8	Fl_8	
-!	gg LAr_8	dg Cl_8	El_8	gg LAr_8	dg Cl_8	El_8	
-!	gg Br_8	Cl_8	Dl_8	dbc Cr_8	Bl_8	strlg LAl_8	!t
-
-&  sharpf sharpc 	
-!	gg LAr_8	dg Cl_8	El_8	gg LAr_8	dg Cl_8	El_8	
-!	gg Br_8	Dl_8	Fl_8	gg Br_8	Dl_8	Fl_8	
-!	dbc Cr_8	HAl_8	El_8	gg Fr_8	El_8	Dl_8	
-!	gg Cr_8	Dl_8	eg Bl_8	strlg LA_4 'la	''!I
-
-&  sharpf sharpc 	I!''	dbha HA_4	E_8	dbe Er_8	Dl_8	Cl_8	
-!	HAr_8	El_8	strla El_8	dbe Er_8	Dl_8	Cl_8	
-!	HA_4	E_8	dbe Er_8	Dl_8	Cl_8	
-!	gg Br_8	Cl_8	Dl_8	dbc Cr_8	Bl_8	strlg LAl_8	!t
+&  sharpf sharpc 	I!''	gg LAr_8 dg Cl_8 El_8 	gg LAr_8 dg Cl_8 El_8 	
+!	gg Br_8 Dl_8 Fl_8 	gg Br_8 Dl_8 Fl_8 	
+!	gg LAr_8 dg Cl_8 El_8 	gg LAr_8 dg Cl_8 El_8 	
+!	gg Br_8 Cl_8 Dl_8 	dbc Cr_8 Bl_8 strlg LAl_8 	!t
 
 &  sharpf sharpc 	
-!	HAr_8	El_8	strla El_8	HAr_8	El_8	strla El_8	
-!	gg F_4	grp F_8	dbe E_4	D_8	
-!	dbc Cr_8	HAl_8	El_8	gg Fr_8	El_8	Dl_8	
-!	gg Cr_8	Dl_8	eg Bl_8	strlg LA_4 'la	''!I
+!	gg LAr_8 dg Cl_8 El_8 	gg LAr_8 dg Cl_8 El_8 	
+!	gg Br_8 Dl_8 Fl_8 	gg Br_8 Dl_8 Fl_8 	
+!	dbc Cr_8 HAl_8 El_8 	gg Fr_8 El_8 Dl_8 	
+!	gg Cr_8 Dl_8 eg Bl_8 	strlg LA_4 'la 	''!I
 
-&  sharpf sharpc 	I!''	dbc Cr_8	LAl_8	dg Cl_8	dbc Cr_8	LAl_8	dg Cl_8	
-!	dbd Dr_8	Bl_8	Dl_8	dbd Dr_8	Bl_8	Dl_8	
-!	dbc Cr_8	LAl_8	dg Cl_8	dbc Cr_8	LAl_8	dg Cl_8	
-!	bubly B_4	LG_8	gg Br_8	Cl_8	Dl_8	!t
+&  sharpf sharpc 	I!''	dbha HA_4 E_8 	dbe Er_8 Dl_8 Cl_8 	
+!	HAr_8 El_8 strla El_8 	dbe Er_8 Dl_8 Cl_8 	
+!	HA_4 E_8 	dbe Er_8 Dl_8 Cl_8 	
+!	gg Br_8 Cl_8 Dl_8 	dbc Cr_8 Bl_8 strlg LAl_8 	!t
 
 &  sharpf sharpc 	
-!	dbc Cr_8	LAl_8	dg Cl_8	dbc Cr_8	LAl_8	dg Cl_8	
-!	dbd Dr_8	Bl_8	Dl_8	gg Fr_8	El_8	Dl_8	
-!	dbc Cr_8	HAl_8	El_8	dare F_4	D_8	
-!	gg Cr_8	Dl_8	eg Bl_8	strlg LA_4 'la	''!I
+!	HAr_8 El_8 strla El_8 	HAr_8 El_8 strla El_8 	
+!	gg F_4 grp F_8 	dbe E_4 D_8 	
+!	dbc Cr_8 HAl_8 El_8 	gg Fr_8 El_8 Dl_8 	
+!	gg Cr_8 Dl_8 eg Bl_8 	strlg LA_4 'la 	''!I
+
+&  sharpf sharpc 	I!''	dbc Cr_8 LAl_8 dg Cl_8 	dbc Cr_8 LAl_8 dg Cl_8 	
+!	dbd Dr_8 Bl_8 Dl_8 	dbd Dr_8 Bl_8 Dl_8 	
+!	dbc Cr_8 LAl_8 dg Cl_8 	dbc Cr_8 LAl_8 dg Cl_8 	
+!	bubly B_4 LG_8 	gg Br_8 Cl_8 Dl_8 	!t
+
+&  sharpf sharpc 	
+!	dbc Cr_8 LAl_8 dg Cl_8 	dbc Cr_8 LAl_8 dg Cl_8 	
+!	dbd Dr_8 Bl_8 Dl_8 	gg Fr_8 El_8 Dl_8 	
+!	dbc Cr_8 HAl_8 El_8 	dare F_4 D_8 	
+!	gg Cr_8 Dl_8 eg Bl_8 	strlg LA_4 'la 	''!I

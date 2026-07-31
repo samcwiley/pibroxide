@@ -1,5 +1,6 @@
 use std::{fs::File, io::BufWriter};
 
+use pibroxide::bmw::process_bmw_bar;
 use pibroxide::parsers::lilypond::process_lily;
 use pibroxide::writers::{
     bmw::{BMWWriter, write_bmw_file},
@@ -7,6 +8,9 @@ use pibroxide::writers::{
 };
 
 fn main() -> Result<(), std::io::Error> {
+    let bar = "gg E_4 'e 'e	dbe Er_8	Cl_8	dg LAl_8";
+    println!("{}", process_bmw_bar(bar));
+
     let tune = process_lily()?;
     let lily_out = File::create("music/outputs/atholl_highlanders_out.ly")?;
     let bmw_out = File::create("music/outputs/atholl_highlanders_out.bww")?;
