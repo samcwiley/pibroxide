@@ -2,9 +2,9 @@
 //use crate::utils::math::assert_fp_eq;
 use std::fmt;
 
-use crate::utils::math::f32_eq;
+use crate::utils::{error::DotError, math::f32_eq};
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct Note {
     pub pitch: Pitch,
     pub duration: Duration,
@@ -26,9 +26,10 @@ impl fmt::Display for Note {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Default)]
 pub enum Pitch {
     LowG,
+    #[default]
     LowA,
     B,
     C,
@@ -79,11 +80,12 @@ impl fmt::Display for Pitch {
     }
 }
 
-#[derive(Clone, Debug, Copy)]
+#[derive(Clone, Debug, Copy, Default)]
 pub enum Duration {
     ThirtySecond,
     Sixteenth,
     Eighth,
+    #[default]
     Quarter,
     Half,
     Whole,
@@ -126,6 +128,29 @@ impl Duration {
             | Duration::DottedSixteenth
             | Duration::DottedEighth => true,
         }
+    }
+
+    /// Adds a dot to an existing duration for internal representation
+    ///
+    /// ## Errors
+    ///
+    /// Double dots and Dotted 32nd notes are not currently supported and will
+    /// return an error
+    pub fn add_dot(&mut self) -> Result<Self, DotError> {
+        let dotted_duration = match self {
+            Duration::ThirtySecond => {
+                return Err(DotError::DotThirtySecond);
+            }
+            Duration::Sixteenth => Duration::DottedSixteenth,
+            Duration::Eighth => Duration::DottedEighth,
+            Duration::Quarter => Duration::DottedQuarter,
+            Duration::Half => Duration::DottedHalf,
+            Duration::Whole => Duration::DottedWhole,
+            _ => {
+                return Err(DotError::DoubleDot);
+            }
+        };
+        Ok(dotted_duration)
     }
 }
 
