@@ -49,7 +49,7 @@ start and end symbols.
 
 You can use `3s` and `3e` to add a triplet symbol above a set of notes that fall
 between the `3s` and `3e`. The compiler does not actually verify how many
-beats/notes fall in this space. 
+beats/notes fall in this space.
 
 ### Beaming
 

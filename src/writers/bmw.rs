@@ -404,5 +404,15 @@ fn get_bmw_embellishment(embellishment: Embellishment) -> String {
         Embellishment::Hodro => String::from("ggrpc"),
         Embellishment::Hiotro => String::from("ggrpb"),
         Embellishment::Tie(pitch) => format!("^t{}", BMWLowercase::new(pitch)),
+        Embellishment::LightDSlur => todo!(),
+        Embellishment::ThumbSlur(pitch) => todo!(),
+        Embellishment::HalfSlur(pitch) => todo!(),
+        Embellishment::LightDThumbSlur => todo!(),
+        Embellishment::LightDHalfSlur => todo!(),
+        Embellishment::ThumbHornpipeShake(pitch) => todo!(),
+        Embellishment::HalfHornpipeShake(pitch) => todo!(),
+        Embellishment::LightDHornpipeShake => todo!(),
+        Embellishment::LightDThumbHornpipeShake => todo!(),
+        Embellishment::LightDHalfHornpipeShake => todo!(),
     }
 }

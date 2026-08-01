@@ -53,27 +53,59 @@ pub fn process_bmw_bar(line: &str) -> Measure {
 }
 
 fn process_bmw_embellishment(embellishment: &str) -> Result<Embellishment, NoteParseError> {
-    let bmw_embellishment = match embellishment {
-        "grp" => Embellishment::Grip,
-        "grpb" => Embellishment::BGrip,
-        "taor" => Embellishment::Taorluath,
-        "taorb" => Embellishment::BTaorluath,
-        "thrwd" => Embellishment::ThrowD,
-        "crunl" => Embellishment::Crunluath,
-        "crunlb" => Embellishment::BCrunluath,
-        "edre" => Embellishment::Edre,
-        "dare" => Embellishment::Dare,
-        "ggrpc" => Embellishment::Hodro,
-        "ggrpb" => Embellishment::Hiotro,
-        "gbr" => Embellishment::Gbirl,
-        "brl" => Embellishment::Birl,
-        "abr" => Embellishment::Abirl,
-        "bubly" => Embellishment::Darodo,
+    let bmw_embellishment = if embellishment.len() == 2
+        && let Some(grace_note_pitch) = embellishment.strip_suffix('g')
+    {
+        Embellishment::GraceNote(process_bmw_embellishment_pitch(grace_note_pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("str") {
+        Embellishment::GraceNote(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("db") {
+        Embellishment::Doubling(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("tdb") {
+        Embellishment::ThumbDoubling(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("hdb") {
+        Embellishment::HalfDoubling(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("gst") {
+        Embellishment::Slur(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("tst") {
+        Embellishment::ThumbSlur(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("hst") {
+        Embellishment::HalfSlur(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("pel") {
+        Embellishment::HornpipeShake(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("tpel") {
+        Embellishment::ThumbHornpipeShake(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("hpel") {
+        Embellishment::HalfHornpipeShake(process_bmw_embellishment_pitch(pitch)?)
+    } else {
+        match embellishment {
+            "lgstd" => Embellishment::LightDSlur,
+            "ltstd" => Embellishment::LightDThumbSlur,
+            "lhstd" => Embellishment::LightDHalfSlur,
+            "lpeld" => Embellishment::LightDHornpipeShake,
+            "tpeld" => Embellishment::LightDThumbHornpipeShake,
+            "lhpeld" => Embellishment::LightDHalfHornpipeShake,
+            "grp" => Embellishment::Grip,
+            "grpb" => Embellishment::BGrip,
+            "taor" => Embellishment::Taorluath,
+            "taorb" => Embellishment::BTaorluath,
+            "thrwd" => Embellishment::ThrowD,
+            "crunl" => Embellishment::Crunluath,
+            "crunlb" => Embellishment::BCrunluath,
+            "edre" => Embellishment::Edre,
+            "dare" => Embellishment::Dare,
+            "ggrpc" => Embellishment::Hodro,
+            "ggrpb" => Embellishment::Hiotro,
+            "gbr" => Embellishment::Gbirl,
+            "brl" => Embellishment::Birl,
+            "abr" => Embellishment::Abirl,
+            "bubly" => Embellishment::Darodo,
 
-        _ => {
-            return Err(NoteParseError::UnrecognizedEmbellishment(
-                embellishment.to_string(),
-            ));
+            _ => {
+                return Err(NoteParseError::UnrecognizedEmbellishment(
+                    embellishment.to_string(),
+                ));
+            }
         }
     };
     Ok(bmw_embellishment)
@@ -141,4 +173,20 @@ fn process_bmw_pitch(pitch: &str) -> Result<Pitch, NoteParseError> {
         }
     };
     Ok(bmw)
+}
+
+fn process_bmw_embellishment_pitch(pitch: &str) -> Result<Pitch, NoteParseError> {
+    let emb_pitch = match pitch {
+        "lg" => Pitch::LowG,
+        "a" | "la" => Pitch::LowA, // `a` used in single grace notes, since high a is `tg`
+        "b" => Pitch::B,
+        "c" => Pitch::C,
+        "d" => Pitch::D,
+        "e" => Pitch::E,
+        "f" => Pitch::F,
+        "g" => Pitch::HighG, // used in single grace note, since low g isnot implemented
+        "ha" | "t" => Pitch::HighA, // `t` for thumb
+        _ => return Err(NoteParseError::UnrecognizedPitch(String::from(pitch))),
+    };
+    Ok(emb_pitch)
 }

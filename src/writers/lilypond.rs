@@ -291,5 +291,15 @@ fn get_lily_embellishment(embellishment: Embellishment) -> String {
         Embellishment::Hodro => String::from("\\catchc"),
         Embellishment::Hiotro => String::from("\\catchb"),
         Embellishment::Tie(_) => String::from("~"),
+        Embellishment::LightDSlur => todo!(),
+        Embellishment::ThumbSlur(pitch) => todo!(),
+        Embellishment::HalfSlur(pitch) => todo!(),
+        Embellishment::LightDThumbSlur => todo!(),
+        Embellishment::LightDHalfSlur => todo!(),
+        Embellishment::ThumbHornpipeShake(pitch) => todo!(),
+        Embellishment::HalfHornpipeShake(pitch) => todo!(),
+        Embellishment::LightDHornpipeShake => todo!(),
+        Embellishment::LightDThumbHornpipeShake => todo!(),
+        Embellishment::LightDHalfHornpipeShake => todo!(),
     }
 }
