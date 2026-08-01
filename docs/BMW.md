@@ -226,6 +226,7 @@ the low g's, rather than a d grace note. The same holds for `tgrphg` (but not
 | Crunluath w/ b g.n. | `crunlb`      |
 | Heavy Crunluath     | unimplemented |
 | Heavy B Crunluath   | unimplemented |
+| Low G Crunluath     | unimplemented |
 | Edre                | `edre`        |
 | Dare                | `dare`        |
 | Chedari             | unimplemented |

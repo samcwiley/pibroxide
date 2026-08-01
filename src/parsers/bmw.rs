@@ -77,6 +77,12 @@ fn process_bmw_embellishment(embellishment: &str) -> Result<Embellishment, NoteP
         Embellishment::ThumbHornpipeShake(process_bmw_embellishment_pitch(pitch)?)
     } else if let Some(pitch) = embellishment.strip_prefix("hpel") {
         Embellishment::HalfHornpipeShake(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("ggrp") {
+        Embellishment::Catch(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("tgrp") {
+        Embellishment::ThumbCatch(process_bmw_embellishment_pitch(pitch)?)
+    } else if let Some(pitch) = embellishment.strip_prefix("hgrp") {
+        Embellishment::HalfCatch(process_bmw_embellishment_pitch(pitch)?)
     } else {
         match embellishment {
             "lgstd" => Embellishment::LightDSlur,
@@ -85,6 +91,9 @@ fn process_bmw_embellishment(embellishment: &str) -> Result<Embellishment, NoteP
             "lpeld" => Embellishment::LightDHornpipeShake,
             "tpeld" => Embellishment::LightDThumbHornpipeShake,
             "lhpeld" => Embellishment::LightDHalfHornpipeShake,
+            "ggrpdb" => Embellishment::DCatchBGraceNote,
+            "tgrpdb" => Embellishment::DThumbCatchBGraceNote,
+            "hgrpdb" => Embellishment::DHalfCatchBGraceNote,
             "grp" => Embellishment::Grip,
             "grpb" => Embellishment::BGrip,
             "taor" => Embellishment::Taorluath,
