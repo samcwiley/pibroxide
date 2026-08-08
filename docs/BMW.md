@@ -49,7 +49,7 @@ start and end symbols.
 
 You can use `3s` and `3e` to add a triplet symbol above a set of notes that fall
 between the `3s` and `3e`. The compiler does not actually verify how many
-beats/notes fall in this space. 
+beats/notes fall in this space.
 
 ### Beaming
 
@@ -226,6 +226,7 @@ the low g's, rather than a d grace note. The same holds for `tgrphg` (but not
 | Crunluath w/ b g.n. | `crunlb`      |
 | Heavy Crunluath     | unimplemented |
 | Heavy B Crunluath   | unimplemented |
+| Low G Crunluath     | unimplemented |
 | Edre                | `edre`        |
 | Dare                | `dare`        |
 | Chedari             | unimplemented |

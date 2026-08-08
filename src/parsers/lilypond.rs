@@ -66,7 +66,7 @@ pub fn process_lily() -> Result<Tune, std::io::Error> {
         // music time
         } else if line == "\\break" {
         } else {
-            bars.push(process_bar(line));
+            bars.push(process_lily_bar(line));
         }
     }
 
@@ -83,7 +83,7 @@ pub fn process_lily() -> Result<Tune, std::io::Error> {
 /// Processes a string slice into a lilypond bar
 /// todo: get `time_signature` from tune
 #[must_use]
-pub fn process_bar(line: &str) -> Measure {
+pub fn process_lily_bar(line: &str) -> Measure {
     let line = line.replace(['[', ']', '|'], "");
     let mut notes = Vec::new();
     let mut embellishment = None;

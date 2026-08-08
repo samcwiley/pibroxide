@@ -2,9 +2,9 @@
 //use crate::utils::math::assert_fp_eq;
 use std::fmt;
 
-use crate::utils::math::f32_eq;
+use crate::utils::{error::DotError, math::f32_eq};
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct Note {
     pub pitch: Pitch,
     pub duration: Duration,
@@ -26,9 +26,23 @@ impl fmt::Display for Note {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+impl Note {
+    /// Returns the same note with a dot added to the duration, if possible.
+    ///
+    /// # Errors
+    ///
+    /// This function will return a [`DotError`] if the note is already dotted
+    /// or the note's duration is a 32nd
+    pub fn add_dot(&mut self) -> Result<Self, DotError> {
+        self.duration = self.duration.add_dot()?;
+        Ok(*self)
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Default)]
 pub enum Pitch {
     LowG,
+    #[default]
     LowA,
     B,
     C,
@@ -79,11 +93,12 @@ impl fmt::Display for Pitch {
     }
 }
 
-#[derive(Clone, Debug, Copy)]
+#[derive(Clone, Debug, Copy, Default, PartialEq, Eq)]
 pub enum Duration {
     ThirtySecond,
     Sixteenth,
     Eighth,
+    #[default]
     Quarter,
     Half,
     Whole,
@@ -127,6 +142,29 @@ impl Duration {
             | Duration::DottedEighth => true,
         }
     }
+
+    /// Adds a dot to an existing duration for internal representation
+    ///
+    /// ## Errors
+    ///
+    /// Double dots and Dotted 32nd notes are not currently supported and will
+    /// return an error
+    pub fn add_dot(&mut self) -> Result<Self, DotError> {
+        let dotted_duration = match self {
+            Duration::ThirtySecond => {
+                return Err(DotError::DotThirtySecond);
+            }
+            Duration::Sixteenth => Duration::DottedSixteenth,
+            Duration::Eighth => Duration::DottedEighth,
+            Duration::Quarter => Duration::DottedQuarter,
+            Duration::Half => Duration::DottedHalf,
+            Duration::Whole => Duration::DottedWhole,
+            _ => {
+                return Err(DotError::DoubleDot);
+            }
+        };
+        Ok(dotted_duration)
+    }
 }
 
 impl fmt::Display for Duration {
@@ -148,16 +186,32 @@ impl fmt::Display for Duration {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Embellishment {
     GraceNote(Pitch),
     Doubling(Pitch),
     HalfDoubling(Pitch),
     ThumbDoubling(Pitch),
     Slur(Pitch),
+    LightDSlur,
+    ThumbSlur(Pitch),
+    HalfSlur(Pitch),
+    LightDThumbSlur,
+    LightDHalfSlur,
     HornpipeShake(Pitch),
+    ThumbHornpipeShake(Pitch),
+    HalfHornpipeShake(Pitch),
+    LightDHornpipeShake,
+    LightDThumbHornpipeShake,
+    LightDHalfHornpipeShake,
     Grip,
     BGrip,
+    Catch(Pitch),
+    ThumbCatch(Pitch),
+    HalfCatch(Pitch),
+    DCatchBGraceNote,
+    DThumbCatchBGraceNote,
+    DHalfCatchBGraceNote,
     Taorluath,
     BTaorluath,
     LGTaorluath,
@@ -176,6 +230,7 @@ pub enum Embellishment {
     Abirl,
     Gbirl,
     Darodo,
+    LowGDarodo,
     Hodro,
     Hiotro,
     Tie(Pitch),
@@ -224,6 +279,23 @@ impl fmt::Display for Embellishment {
             Embellishment::Hiotro => "Hiotro",
             Embellishment::HeavyCrunluath => "Heavy Crunluath",
             Embellishment::Tie(_) => "Tie",
+            Embellishment::LightDSlur => "Light D Slur",
+            Embellishment::LightDThumbSlur => "Light D Thumb Slur",
+            Embellishment::LightDHalfSlur => "Light D Half Slur",
+            Embellishment::ThumbSlur(pitch) => &format!("{pitch} Thumb Slur"),
+            Embellishment::HalfSlur(pitch) => &format!("{pitch} Half Slur"),
+            Embellishment::ThumbHornpipeShake(pitch) => &format!("{pitch} Thumb Hornpipe Shake"),
+            Embellishment::HalfHornpipeShake(pitch) => &format!("{pitch} Half Hornpipe Shake"),
+            Embellishment::LightDHornpipeShake => "Light D Hornpipe Shake",
+            Embellishment::LightDThumbHornpipeShake => "Light D Thumb Hornpipe Shake",
+            Embellishment::LightDHalfHornpipeShake => "Light D Half Hornpipe Shake",
+            Embellishment::Catch(pitch) => &format!("{pitch} Catch"),
+            Embellishment::ThumbCatch(pitch) => &format!("{pitch} Thumb Catch"),
+            Embellishment::HalfCatch(pitch) => &format!("{pitch} Half Catch"),
+            Embellishment::DCatchBGraceNote => "D Catch w/ B Grace Note",
+            Embellishment::DThumbCatchBGraceNote => "D Thumb Catch w/ B Grace Note",
+            Embellishment::DHalfCatchBGraceNote => "D Half Catch w/ B Grace Note",
+            Embellishment::LowGDarodo => "Darodo from Low G",
         };
         write!(f, "{embellishment}")
     }
